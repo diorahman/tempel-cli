@@ -1,6 +1,6 @@
 {
   "name": "tempel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "client app for tempel.blankon.in",
   "main": "index.js",
   "scripts": {
@@ -26,5 +26,13 @@
   },
   "devDependencies": {
     "mocha": "^1.18.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/diorahman/tempel-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/diorahman/tempel-cli/issues"
+  },
+  "homepage": "https://github.com/diorahman/tempel-cli"
 }
