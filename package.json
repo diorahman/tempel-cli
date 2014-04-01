@@ -1,0 +1,30 @@
+{
+  "name": "tempel",
+  "version": "0.0.1",
+  "description": "client app for tempel.blankon.in",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "bin": {
+    "tempel": "bin/tempel.js"
+  },
+  "keywords": [
+    "tempel",
+    "copy",
+    "paste",
+    "gist",
+    "share"
+  ],
+  "author": "Dhi Aurrahman <diorahman@rockybars.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.2.0",
+    "progress": "^1.1.5",
+    "mime": "^1.2.11",
+    "request": "^2.34.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.18.2"
+  }
+}
