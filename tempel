@@ -1,0 +1,112 @@
+#!/usr/bin/python
+
+import urllib, urllib2
+import os, sys, getopt
+
+def versi():
+    string = """tempel cli version 0.0.3"""
+    print string
+
+def bantuan():
+    string = """Usage: tempel [options]
+tempel -l <lang> namefile
+    Options:
+
+        -h, --help             output usage information
+        -v, --version          output the version number
+        -l, --language <lang>  Set language;
+            bash c cpp css diff html html+django ini java
+            lua make perl php python rst ruby sql text xml yaml
+        -t, --text <text>      from text
+        <filename>               from filename directly""" 
+    print string
+
+def main(argv):
+    content = ""
+    lang = "plain"
+    argumen =[]
+
+    try:
+        opts, args = getopt.getopt(argv,"vhl:t:",["version","help","language=","text="])
+    except getopt.GetoptError as err:
+        print str(err)
+        bantuan()
+        sys.exit(2)
+    if opts ==argumen and args == argumen:      #./tempel
+        bantuan()
+        sys.exit(2)
+    elif opts == argumen and args != argumen:   #./tempel README.md
+        if len(args) < 2:
+            if os.path.isfile(argv[0]):
+                f = open(argv[0], "r")
+                content = f.readlines()
+            else:
+                print "No such file",argv[0]             #./tempel a
+                sys.exit(2)
+        else:
+            if argv[1] in ("-l", "--lang", "--language"):  #./tempel README.md -l bash
+                lang = argv[2]
+                if os.path.isfile(argv[0]):
+                    f = open(argv[0], "r")
+                    content = f.readlines()
+            elif argv[1] in ("-t", "--text"):              #./tempel README.md -t hihi
+                print "Wrong parameter"
+                bantuan()
+                sys.exit(2)
+            else:
+                print "Wrong parameter"
+                bantuan()
+                sys.exit(2)
+    elif opts != argumen and args == argumen:
+        for opt, arg in opts:
+            if len(opts) < 2:
+                if opt in ("-v", "--version"):      #./tempel --version
+                    versi()
+                    sys.exit(2)
+                elif opt in ("-h", "--help"):       #./tempel --help  
+                    bantuan()
+                    sys.exit(2)
+                elif opt in ("-l", "--lang", "--language"):  #./tempel -l bash
+                    print """Need text parameter"""
+                    bantuan()
+                    sys.exit(2)
+                elif opt in ("-t", "--text"):                #./tempel -t hihihi
+                    content = argv[1]
+            elif len(opts) > 1 and len(opts) <3:
+                if argv[0] in ("-l", "--lang", "--language"):#./tempel -l bash -t hihihi
+                    lang = argv[1]
+                    content = argv[3]
+                elif argv[0] in ("-t", "--text"):            #./tempel -t hihihi -l bash 
+                    lang = argv[3]
+                    content = argv[1]
+                break
+            else:
+                print "To much parameters"
+                bantuan()
+                sys.exit(2)
+    elif opts != argumen and args != argumen:
+        for opt, arg in opts:
+            if opt in ("-l", "--lang", "--language"):   #./tempel -l bash README.md
+                lang = arg
+            elif opt in ("-t", "--text"):               #./tempel -t hihihi README.md
+                print "Wrong parameter"
+                bantuan()
+                sys.exit(2)
+        if os.path.isfile(args[0]):
+            f = open(args[0], "r")
+            content = f.readlines()
+        else:
+            print "No such file",args[0]             #./tempel a
+            sys.exit(2)
+    
+    tempel = 'http://tempel.blankon.in'
+    values = {
+      'language' : lang,
+      'content' : content
+    }
+    data = urllib.urlencode(values)
+    response = urllib2.urlopen(urllib2.Request(tempel,data))
+    print 'URL     :', response.geturl()
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
