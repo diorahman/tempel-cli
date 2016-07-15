@@ -29,12 +29,9 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv,"vhl:t:",["version","help","language=","text="])
     except getopt.GetoptError as err:
-        print argv
         print str(err)
         bantuan()
         sys.exit(2)
-    print opts,args,argv
-    print len(args)
     if opts ==argumen and args == argumen:      #./tempel
         bantuan()
         sys.exit(2)
@@ -87,9 +84,7 @@ def main(argv):
                 print "To much parameters"
                 bantuan()
                 sys.exit(2)
-    elif opts != argumen and args != argumen:              
-        print "err"
-        print opts
+    elif opts != argumen and args != argumen:
         for opt, arg in opts:
             if opt in ("-l", "--lang", "--language"):   #./tempel -l bash README.md
                 lang = arg
@@ -108,11 +103,10 @@ def main(argv):
     values = {
       'language' : lang,
       'content' : content
-    } 
-    print values
-    #data = urllib.urlencode(values)
-    #response = urllib2.urlopen(urllib2.Request(tempel,data))
-    #print 'URL     :', response.geturl()
+    }
+    data = urllib.urlencode(values)
+    response = urllib2.urlopen(urllib2.Request(tempel,data))
+    print 'URL     :', response.geturl()
 
 if __name__ == "__main__":
    main(sys.argv[1:])
